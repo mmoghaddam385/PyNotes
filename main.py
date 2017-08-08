@@ -40,7 +40,7 @@ def loop(commands):
 		
 		if len(line) > 0:
 			words = line.split(' ')
-			
+
 			cmd_name = words[0]
 			args = words[1:]
 
@@ -52,7 +52,7 @@ def loop(commands):
 			if cmd_name in commands:
 				context = commands[cmd_name].execute(context, args)
 			else:
-				print("Command not found, try help")
+				print("Command not found, try 'help'")
 
 
 if __name__ == '__main__': main()

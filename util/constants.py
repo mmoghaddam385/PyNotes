@@ -13,7 +13,7 @@ ASCII_WELCOME_BANNER = """
 @                                               @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-To open a safe, use the 'open' command
+To create a safe, use the 'new' command
 For more help, use the 'help' command
 
 """
@@ -36,3 +36,6 @@ RECOMMENDED_SHELL_WIDTH = 50
 # the keys into the context dictionary
 CONTEXT_COMMANDS_KEY = "commands"
 CONTEXT_SAFE_KEY = "safe"
+
+# the name of the safe directory
+SAFE_ROOT_DIR = ".pynote-safe"
