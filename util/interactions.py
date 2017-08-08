@@ -23,7 +23,7 @@ def create_password(initial_prompt, confirm_prompt="Confirm your password: "):
 		confirmation = getpass(prompt=confirm_prompt)
 
 		if pw == confirmation:
-			return True
+			break
 		else:
 			print("Passwords didn't match, try again\n")
 

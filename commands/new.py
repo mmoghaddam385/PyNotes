@@ -28,7 +28,8 @@ def execute(context, args):
 	# everything is good to go, start making that safe!
 	pw = create_password("Create a password for the new safe: ")
 
-	Safe.init_safe(args[0], pw)
+	context[consts.CONTEXT_SAFE_KEY] = Safe.init_safe(args[0], pw)
+	pw = ""
 
 	return context
 

@@ -1,4 +1,7 @@
+import crypto.hash_utils as hash_utils
 import util.constants as consts
+
+from crypto.key import Key
 
 from os import mkdir
 from os.path import join
@@ -11,3 +14,28 @@ class Safe:
 	def init_safe(dir, password):
 		safe_dir = join(dir, consts.SAFE_ROOT_DIR)
 		mkdir(safe_dir)
+
+		verification_hash = hash_utils.create_verification_hash(password)
+		key_hash = hash_utils.hash_for_key(password, verification_hash.kdf_params)
+
+		password = ""
+
+		verification_hash.save_to_file(join(safe_dir, consts.SAFE_PASSWORD_FILE))
+		dkey = Key.generate_and_encrypt(key_hash.hash, safe_dir)
+
+		return Safe(safe_dir, [], dkey)
+
+	# class function that opens an existing safe and returns a new safe object
+	def open_safe(password: str, dir):
+		return "stub"
+
+	def __init__(self, safe_dir, notes, derived_key):
+		self.safe_dir = safe_dir
+		self.notes = notes
+		self.derived_key = derived_key
+
+	# close this safe by disregarding all sensitive info
+	def close(self):
+		self.safe_dir = ""
+		self.notes = []
+		self.derived_key = None
