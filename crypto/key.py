@@ -1,3 +1,4 @@
+import crypto.cipher_utils as cipher_utils
 import util.constants as consts
 import util.conversions as conversions
 
@@ -11,15 +12,17 @@ class Key:
     # class function that generates, encrypts and saves a new key to disk
     # return an unencrypted version of the key
     def generate_and_encrypt(password: str, safe_dir):
-        mkey = Fernet(conversions.string_to_bytes(password))
+        mkey = conversions.string_to_bytes(password)
         
-        dkey_bytes = Fernet.generate_key()
-        enc_dkey = mkey.encrypt(dkey_bytes).decode()
+        dkey_bytes = urandom(consts.MASTER_KEY_LENGTH)
+        dkey = conversions.bytes_to_b64string(dkey_bytes)
 
+        enc_dkey = cipher_utils.encrypt_string(dkey, Key(mkey))
+        
         with open(join(safe_dir, consts.SAFE_KEY_FILE), 'w') as key_file:
             key_file.write(enc_dkey)
 
-        return Key(dkey_bytes)
+        return Key(conversions.string_to_bytes(dkey))
 
     def __init__(self, key: bytes):
         self.key = key

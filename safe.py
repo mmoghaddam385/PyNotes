@@ -5,6 +5,7 @@ import util.conversions as conversions
 
 from crypto.hash_classes import HashedPassword
 from crypto.key import Key
+from note import Note
 
 from os import mkdir
 from os.path import join
@@ -25,6 +26,9 @@ class Safe:
 
 		verification_hash.save_to_file(join(safe_dir, consts.SAFE_PASSWORD_FILE))
 		dkey = Key.generate_and_encrypt(key_hash.hash, safe_dir)
+
+		print("mkey:", key_hash.hash)
+		print("dkey:", dkey.key)
 
 		return Safe(safe_dir, [], dkey)
 
@@ -52,10 +56,12 @@ class Safe:
 		
 		mkey_hashed.destroy()
 		mkey.destroy()
+
 		#	6: decrpyt file names to get note names
+		notes = Note.load_from_dir(dir, dkey)
 
 		# 	7: return new safe with info
-		return Safe(dir, [], dkey)
+		return Safe(dir, notes, dkey)
 
 	def __init__(self, safe_dir, notes, derived_key: Key):
 		self.safe_dir = safe_dir
