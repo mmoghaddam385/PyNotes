@@ -30,7 +30,7 @@ def execute(context, args):
 
 def validate_args(args):
 	# num args
-	if not command_utils.validate_num_args(args=args, num_args=1, cmd_name='open'):
+	if not command_utils.validate_num_args(args=args, num_args=1, cmd_name='open-safe'):
 		return False
 	
 	args[0] = expanduser(args[0])
@@ -52,5 +52,5 @@ def short_help():
 
 def long_help():
 	return ("This command opens an existing safe in a given location\n"
-			"       usage: open <dir>"
-			"       dir - the directory that contains the safe")
+			"            usage: open <dir>\n"
+			"            dir - the directory that contains the safe")

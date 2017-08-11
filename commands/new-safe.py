@@ -30,7 +30,7 @@ def execute(context, args):
 # validates the args; require one that points to a valid directory
 def validate_args(args):
 	# num args
-	if not command_utils.validate_num_args(args=args, num_args=1, cmd_name='new'):
+	if not command_utils.validate_num_args(args=args, num_args=1, cmd_name='new-safe'):
 		return False
 
 	args[0] = expanduser(args[0])
@@ -56,5 +56,5 @@ def short_help():
 
 def long_help():
 	return ("Creates a new safe\n"
-			"      usage: new <dir>\n"
-			"      dir - the parent directory in which to create the new note safe")
+			"           usage: new <dir>\n"
+			"           dir - the parent directory in which to create the new note safe")
