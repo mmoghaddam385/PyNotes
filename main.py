@@ -1,6 +1,8 @@
 from os import listdir
 from importlib import import_module
 
+import sys
+
 import util.constants as consts
 
 def main():
@@ -55,4 +57,16 @@ def loop(commands):
 				print("Command not found, try 'help'")
 
 
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+	if sys.version_info.major < consts.MIN_PYTHON_VERSION:
+		print("Sorry, this program requires python {0} or newer".format(consts.MIN_PYTHON_VERSION))
+	else:
+		has_required_libs = True
+		try:
+			import cryptography
+		except ImportError:
+			has_required_libs = False
+			print("Missing required library 'cryptography' (try `pip install cryptography`)")
+
+		if has_required_libs:
+			main()

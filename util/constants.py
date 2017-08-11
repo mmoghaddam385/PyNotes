@@ -1,4 +1,7 @@
 
+# min python version
+MIN_PYTHON_VERSION = 3
+
 # branding of the program
 ASCII_WELCOME_BANNER = """
 \n\n\n\n\n\n\n\n\n\n\n\n
