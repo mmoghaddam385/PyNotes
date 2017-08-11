@@ -9,3 +9,6 @@ def bytes_to_b64string(to_decode):
 # convert from string to bytes
 def string_to_bytes(to_encode):
     return to_encode.encode(consts.STANDARD_ENCODING)
+
+def encoded_string_to_bytes(to_encode):
+    return base64.urlsafe_b64decode(string_to_bytes(to_encode))

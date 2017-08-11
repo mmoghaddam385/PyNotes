@@ -1,3 +1,4 @@
+import util.command_utils as command_utils
 import util.constants as consts
 
 from safe import Safe
@@ -15,15 +16,8 @@ def execute(context, args):
 		return context
 
 	# check if there's an open safe already
-	if context[consts.CONTEXT_SAFE_KEY] != None:
-		confirmed = confirm_action("Warning: this will close the current safe, are you sure you want to continue?")
-		
-		if not confirmed:
-			# not confirmed? just finish the command here
-			return context
-		else:
-			# else close the safe and continue
-			context[consts.CONTEXT_SAFE_KEY].close()
+	if not command_utils.confirm_close_current_safe(context):
+		return context
 
 	# everything is good to go, start making that safe!
 	pw = create_password("Create a password for the new safe: ")
@@ -35,14 +29,8 @@ def execute(context, args):
 
 # validates the args; require one that points to a valid directory
 def validate_args(args):
-	# not enough args
-	if len(args) < 1:
-		print("<dir> is a required argument")
-		return False
-
-	# too many args
-	if len(args) > 1:
-		print("Too many arguments")
+	# num args
+	if not command_utils.validate_num_args(args=args, num_args=1, cmd_name='new'):
 		return False
 
 	args[0] = expanduser(args[0])
@@ -68,5 +56,5 @@ def short_help():
 
 def long_help():
 	return ("Creates a new safe\n"
-			"      usage: new <dir>"
+			"      usage: new <dir>\n"
 			"      dir - the parent directory in which to create the new note safe")

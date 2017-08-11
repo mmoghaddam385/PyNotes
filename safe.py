@@ -1,6 +1,9 @@
+import crypto.cipher_utils as cipher_utils
 import crypto.hash_utils as hash_utils
 import util.constants as consts
+import util.conversions as conversions
 
+from crypto.hash_classes import HashedPassword
 from crypto.key import Key
 
 from os import mkdir
@@ -26,10 +29,35 @@ class Safe:
 		return Safe(safe_dir, [], dkey)
 
 	# class function that opens an existing safe and returns a new safe object
-	def open_safe(password: str, dir):
-		return "stub"
+	def open_safe(given_pw: str, dir):
+		#	0: read password file
+		expected_pw = HashedPassword.read_from_file(join(dir, consts.SAFE_PASSWORD_FILE))
+		
+		#	1: verify password
+		if not hash_utils.verify_password(given_pw, expected_pw):
+			raise Exception("incorrect password")
 
-	def __init__(self, safe_dir, notes, derived_key):
+		#	2: get key_hash
+		mkey_hashed = hash_utils.hash_for_key(given_pw, expected_pw.kdf_params)
+		mkey = Key(conversions.string_to_bytes(mkey_hashed.hash))
+		given_pw = ""
+
+		#	4: open encyrpted key file
+		with open(join(dir, consts.SAFE_KEY_FILE)) as key_file:
+			encrypted_key = key_file.read()
+
+		#	5: decyrpt derived key
+		dkey_string = cipher_utils.decrypt_string(encrypted_key, mkey)
+		dkey = Key(conversions.string_to_bytes(dkey_string))
+		
+		mkey_hashed.destroy()
+		mkey.destroy()
+		#	6: decrpyt file names to get note names
+
+		# 	7: return new safe with info
+		return Safe(dir, [], dkey)
+
+	def __init__(self, safe_dir, notes, derived_key: Key):
 		self.safe_dir = safe_dir
 		self.notes = notes
 		self.derived_key = derived_key
@@ -38,4 +66,7 @@ class Safe:
 	def close(self):
 		self.safe_dir = ""
 		self.notes = []
-		self.derived_key = None
+
+		if self.derived_key is not None:
+			self.derived_key.destroy()
+			self.derived_key = None

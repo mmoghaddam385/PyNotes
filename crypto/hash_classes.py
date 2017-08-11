@@ -28,7 +28,7 @@ class HashedPassword:
         
         split = as_string.split('|')
         hash = split[0]
-        kdf_params = KDFParams(salt=split[1], output_length=split[2], iterations=int(split[3]))
+        kdf_params = KDFParams(salt=split[1], output_length=int(split[2]), iterations=int(split[3]))
 
         return HashedPassword(hash, kdf_params)
     
@@ -44,3 +44,7 @@ class HashedPassword:
         
         with open(file_name, 'w') as file:
             file.write(as_string)
+
+    def destroy(self):
+        self.hash = None
+        self.kdf_params = None
