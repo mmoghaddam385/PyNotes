@@ -5,6 +5,8 @@ import sys
 
 import util.constants as consts
 
+### TODO: better editor support/nice failure message
+
 def main():
 	print(consts.ASCII_WELCOME_BANNER)
 

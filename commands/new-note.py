@@ -18,12 +18,14 @@ def execute(context, args):
         return context
 
     note_text = note_utils.open_edit_note()
-    new_note = Note(args[0])
-    new_note.save(note_text, safe)
 
-    note_text = ""
+    if note_text is not None:
+        new_note = Note(args[0])
+        new_note.save(note_text, safe)
 
-    safe.notes.append(new_note)
+        note_text = ""
+
+        safe.notes.append(new_note)
 
     return context
 

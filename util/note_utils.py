@@ -26,14 +26,31 @@ def is_valid_note_file(file_name):
 # call up an editor and get input from user
 # set the editor up with `intitial_text`
 def open_edit_note(initial_text=''):
-    editor = os.environ.get(consts.NOTE_EDITOR_KEY, consts.NOTE_DEFAULT_EDITOR)
-
     with tempfile.NamedTemporaryFile(mode='w+', suffix='.tmp') as tf:
         tf.write(initial_text)
         tf.flush()
-        call([editor, tf.name])
-
-        tf.seek(0)
-        note = tf.read()
+        
+        if _try_open_editor(tf.name):
+            tf.seek(0)
+            note = tf.read()
+        else:
+            note = None
 
     return note
+
+def _try_open_editor(filename):
+    success = False
+
+    for editor in consts.NOTE_EDITORS:
+        try:
+            call([editor, filename])
+            success = True
+            break
+        except FileNotFoundError:
+            pass
+    
+    if not success:
+        print("No suitable editors available")
+        print("Make sure one of the following are in your $PATH:", consts.NOTE_EDITORS)
+
+    return success

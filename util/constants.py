@@ -45,8 +45,7 @@ SAFE_KEY_FILE = ".key"
 # note constants
 NOTE_NAME_MAX_LEN = 20
 RESTRICTED_NOTE_NAMES = [SAFE_PASSWORD_FILE, SAFE_KEY_FILE]
-NOTE_EDITOR_KEY = "EDITOR"
-NOTE_DEFAULT_EDITOR = "vim"
+NOTE_EDITORS = ["vim", "vi", "emacs", "nano"]
 
 # string encoding to use throughout the program
 STANDARD_ENCODING = "utf-8"
