@@ -22,8 +22,11 @@ def execute(context, args):
 
 def print_all_commands(cmd_dict):
 	print("To get more detailed help for a given command, try help [cmd...]\n")
-	for cmd_name, cmd in cmd_dict.items():
-		print('{0} - {1}'.format(cmd_name, cmd.short_help()))
+
+	longest = max([len(name) for name in cmd_dict.keys()])
+
+	for cmd_name, cmd in sorted(cmd_dict.items()):
+		print('{0} - {1}'.format(cmd_name.ljust(longest), cmd.short_help()))
 
 def print_given_commands(cmd_dict, to_print):
 	for cmd_name in to_print:
