@@ -4,11 +4,14 @@ from subprocess import call
 
 import sys
 
+from util.interactions import clear_screen
+
 import util.constants as consts
 
 ### TODO: better editor support/nice failure message
 
 def main():
+	clear_screen()
 	print(consts.ASCII_WELCOME_BANNER)
 
 	commands = load_commands()
@@ -63,13 +66,7 @@ def loop(commands):
 		context[consts.CONTEXT_SAFE_KEY].close()
 
 	# try to clear screen on exit
-	try:
-		call(["clear"])
-	except:
-		try:
-			call(["cls"])
-		except:
-			pass
+	clear_screen()
 
 if __name__ == '__main__':
 	if sys.version_info.major < consts.MIN_PYTHON_VERSION:

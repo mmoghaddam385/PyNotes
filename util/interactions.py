@@ -1,4 +1,5 @@
 from getpass import getpass
+from subprocess import call
 
 # prompt the user to confirm a given action
 # the user is prompted repeatedly until valid input is recieved
@@ -29,3 +30,12 @@ def create_password(initial_prompt, confirm_prompt="Confirm your password: "):
 
 	confirmation = ""
 	return pw
+
+def clear_screen():
+	try:
+		call(["clear"])
+	except:
+		try:
+			call(["cls"])
+		except:
+			pass

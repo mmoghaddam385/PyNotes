@@ -1,12 +1,9 @@
-from shutil import get_terminal_size
+from util.interactions import clear_screen
 
 # this command clears the screen by printing a bunch of newlines
 
 def execute(context, args):
-	shell_height = get_terminal_size().lines
-
-	print('\n' * shell_height)
-
+	clear_screen()
 	return context
 
 def short_help():
