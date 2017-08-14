@@ -1,8 +1,7 @@
-from os import listdir
 from importlib import import_module
 from subprocess import call
 
-import sys
+import sys, os
 
 from util.interactions import clear_screen
 
@@ -20,9 +19,12 @@ def load_commands():
 	# valid files include all python files that don't start with '__'
 	is_valid_file = lambda file_name: not file_name.startswith('__') and file_name.endswith('.py')
 
+	script_dir = os.path.dirname(os.path.realpath(__file__))
+	commands_dir = os.path.join(script_dir, consts.COMMANDS_DIR)
+
 	# map all valid files in the commands dir from their name (minus the .py extension) to their imported module
 	commands = {}
-	for file in listdir(consts.COMMANDS_DIR):
+	for file in os.listdir(commands_dir):
 
 		# check if this is a valid command file
 		if is_valid_file(file):
