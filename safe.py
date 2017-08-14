@@ -27,9 +27,6 @@ class Safe:
 		verification_hash.save_to_file(join(safe_dir, consts.SAFE_PASSWORD_FILE))
 		dkey = Key.generate_and_encrypt(key_hash.hash, safe_dir)
 
-		print("mkey:", key_hash.hash)
-		print("dkey:", dkey.key)
-
 		return Safe(safe_dir, [], dkey)
 
 	# class function that opens an existing safe and returns a new safe object

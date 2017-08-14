@@ -8,8 +8,6 @@ from util.interactions import clear_screen
 
 import util.constants as consts
 
-### TODO: better editor support/nice failure message
-
 def main():
 	clear_screen()
 	print(consts.ASCII_WELCOME_BANNER)
