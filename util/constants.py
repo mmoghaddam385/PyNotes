@@ -20,6 +20,10 @@ For more help, use the 'help' command
 
 """
 
+# common time stamp format
+TIMESTAMP_FORMAT = "%Y-%m-%d %H:%M"
+TIMESTAMP_LENGTH = 16
+
 # the directory where all of the commands are defined
 COMMANDS_DIR = "commands/"
 
@@ -45,6 +49,7 @@ SAFE_KEY_FILE = ".key"
 NOTE_NAME_MAX_LEN = 20
 RESTRICTED_NOTE_NAMES = [SAFE_PASSWORD_FILE, SAFE_KEY_FILE]
 NOTE_EDITORS = ["vim", "vi", "emacs", "nano"]
+NOTE_FILE_NAME_LENGTH = 100
 
 # string encoding to use throughout the program
 STANDARD_ENCODING = "utf-8"

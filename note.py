@@ -1,5 +1,8 @@
 import crypto.cipher_utils as cipher_utils
+import util.constants as consts
 import util.note_utils as note_utils
+
+import base64, struct, time
 
 from os import listdir, remove
 from os.path import isfile, join
@@ -46,6 +49,18 @@ class Note:
             encrypted = file.read()
 
         return cipher_utils.decrypt_string(encrypted, safe.derived_key)
+
+    # get the timestamp from the fernet token aka filename
+    # see cryptography.fernet implementation from cryptography library docs for details
+    def get_edit_timestamp(self):
+        if self.file_name is None:
+            return "?" * consts.TIMESTAMP_LENGTH
+
+        decoded_file_name = base64.urlsafe_b64decode(self.file_name)
+        ts, = struct.unpack(">Q", decoded_file_name[1:9])
+        edit_timestamp = time.localtime(ts)
+
+        return time.strftime(consts.TIMESTAMP_FORMAT, edit_timestamp)
 
     # encrypts contents and saves to disk
     # NOTE this function will delete the old note file it it existed

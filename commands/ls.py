@@ -35,10 +35,12 @@ def long_print(notes, safe_dir):
     print("\nThe safe is located in", safe_dir)
     print("There are", len(notes), "note(s) in the safe\n")
 
-    longest = max([len(note.name) for note in notes])
+    longest = max(6, max([len(note.name) for note in notes]))
 
+    print("{0} | {1} | File".format("Last Edit".ljust(consts.TIMESTAMP_LENGTH), "Name".ljust(longest)))
+    print("-" * (consts.TIMESTAMP_LENGTH + 3 + longest + 3 + consts.NOTE_FILE_NAME_LENGTH))
     for note in notes:
-        print("{0} ->  {1}".format(note.name.ljust(longest), note.file_name))
+        print("{0} | {1} | {2}".format(note.get_edit_timestamp(), note.name.ljust(longest), note.file_name))
 
 def short_print(notes):
     for note in notes:
