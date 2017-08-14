@@ -28,6 +28,25 @@ class Note:
         self.name = name
         self.file_name = file_name
 
+    def __hash__(self):
+        return self.name.hash()
+
+    # overload equals
+    def __eq__(self, value):
+        if type(value) == str:
+            return self.name == value
+        if type(value) == Note:
+            return self.name == value.name and self.file_name == value.file_name
+
+        return False
+
+    # retrieves and decrypts the contents of this note within the context of the given safe
+    def get_contents(self, safe):
+        with open(join(safe.safe_dir, self.file_name)) as file:
+            encrypted = file.read()
+
+        return cipher_utils.decrypt_string(encrypted, safe.derived_key)
+
     # encrypts contents and saves to disk
     # NOTE this function will delete the old note file it it existed
     def save(self, contents, safe):

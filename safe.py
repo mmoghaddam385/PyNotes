@@ -68,6 +68,13 @@ class Safe:
 		self.notes = notes
 		self.derived_key = derived_key
 
+	def get_note_by_name(self, name):
+		for note in self.notes:
+			if note.name == name:
+				return note
+
+		return None
+
 	# close this safe by disregarding all sensitive info
 	def close(self):
 		self.safe_dir = ""
