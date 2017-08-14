@@ -1,5 +1,6 @@
 from os import listdir
 from importlib import import_module
+from subprocess import call
 
 import sys
 
@@ -58,6 +59,17 @@ def loop(commands):
 			else:
 				print("Command not found, try 'help'")
 
+	if context[consts.CONTEXT_SAFE_KEY] is not None:
+		context[consts.CONTEXT_SAFE_KEY].close()
+
+	# try to clear screen on exit
+	try:
+		call(["clear"])
+	except:
+		try:
+			call(["cls"])
+		except:
+			pass
 
 if __name__ == '__main__':
 	if sys.version_info.major < consts.MIN_PYTHON_VERSION:
