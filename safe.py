@@ -9,6 +9,7 @@ from note import Note
 
 from os import mkdir
 from os.path import join
+from shutil import rmtree
 
 # this class describes a safe object
 
@@ -72,6 +73,10 @@ class Safe:
 
 		return None
 
+	def remove_note(self, note):
+		note.delete(self)
+		self.notes.remove(note)
+
 	# close this safe by disregarding all sensitive info
 	def close(self):
 		self.safe_dir = ""
@@ -80,3 +85,9 @@ class Safe:
 		if self.derived_key is not None:
 			self.derived_key.destroy()
 			self.derived_key = None
+
+	# delete the safe and everything in it from the filesystem
+	# NOTE: This is the real deal
+	def delete(self):
+		rmtree(self.safe_dir)
+		self.close()

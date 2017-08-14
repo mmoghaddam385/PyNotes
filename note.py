@@ -77,3 +77,8 @@ class Note:
             remove(join(safe.safe_dir, self.file_name))
 
         self.file_name = encrypted_filename
+
+    # this function deletes the note file from the fs
+    def delete(self, safe):
+        if self.file_name is not None:
+            remove(join(safe.safe_dir, self.file_name))
