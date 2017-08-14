@@ -22,4 +22,4 @@ def short_help():
 
 def long_help():
     return ("Delegates to 'open-safe' if no safe is currently open\n"
-            "      Delegates to 'open-note' otherwise")
+            "       Delegates to 'open-note' otherwise")

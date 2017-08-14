@@ -35,3 +35,11 @@ def validate_args(args, safe):
         return False
 
     return True
+
+def short_help():
+    return "Print the contents of a note to the screen"
+
+def long_help():
+    return ("Print the contents of a note to the screen\n"
+            "        usage: print <note>\n"
+            "        note - the name of the note to print")
