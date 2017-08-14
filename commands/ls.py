@@ -35,6 +35,9 @@ def long_print(notes, safe_dir):
     print("\nThe safe is located in", safe_dir)
     print("There are", len(notes), "note(s) in the safe\n")
 
+    if len(notes) == 0:
+        return
+
     longest = max(6, max([len(note.name) for note in notes]))
 
     print("{0} | {1} | File".format("Last Edit".ljust(consts.TIMESTAMP_LENGTH), "Name".ljust(longest)))
